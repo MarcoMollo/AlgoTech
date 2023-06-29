@@ -137,6 +137,8 @@ Laufzeit:
 O(n) da man einmal durch das array läuft
 
 11. Wechselgeld
+Annahme:
+Coins list ist absteigend sortiert.
 Funktion:
 def coinChange(amount: int, coins: list) -> int:
     result = []
@@ -152,19 +154,33 @@ Laufzeit:
 O(n)
 
 12. Fraktionale Rucksackproblem
-Annahme: Beide Arrays sind sortiert
+Annahme: arr besteht aus Items die als Tupel aufgebaut sind (profit, weight)
 Funktion:
-def main(values: list, weights: list, capacity: int) -> int:
-    max_value = 0
-    for i in range(len(values)):
-        if capacity == 0:
+def fractionalKnapsack(W, arr):
+	# Sorting Item on basis of ratio
+    arr.sort(key=lambda x: (x.profit/x.weight), reverse=True)   
+ 
+    # Result(value in Knapsack)
+    finalvalue = 0.0
+ 
+    # Looping through all Items
+    for item in arr:
+ 
+        # If adding Item won't overflow,
+        # add it completely
+        if item.weight <= W:
+            W -= item.weight
+            finalvalue += item.profit
+ 
+        # If we can't add current Item,
+        # add fractional part of it
+        else:
+            finalvalue += item.profit * W / item.weight
             break
-        wc_ratio = 1
-        if weights[i] > capacity:
-            wc_ratio = capacity/weights[i]
-        capacity -= wc_ratio*weights[i]
-        max_value += wc_ratio*values[i]
-    return max_value
+     
+    # Returning final value
+    return finalvalue
 
 Laufzeit:
-O(n) da man einmal durch das array läuft
+O(n log n)
+
