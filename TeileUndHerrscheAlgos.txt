@@ -1,0 +1,317 @@
+TEILE UND HERRSCHE ALGORITHMEN VON DER LISTE
+
+1. Teile und Herrsche Eigenvalue algorithm:
+Teile Fall:
+Aus einer Matrix T holen wir zwei Teilmatrizen raus. T1 = n x n und T2 = (m - n) x (m - n)
+Herrsche Teil:
+Diagonale Berechnen
+
+Laufzeit:
+a = 2, weil wir in jeweils 2 Teilmatrizen aufteilen
+b = 2, weil die Matrizen jeweils die Hälfte an Größe haben
+f(n) = O(n^2), weil man durch die Matrizen durch iterieren muss. Doppelte For schleife mit jeweils Laufzeit von O(n)
+=> T(n) = 2 * T(n/2) + O(n^2)
+
+2. Größter gemeinsamer Teiler:
+Funktion:
+def ggt(a: int, b: int):
+	# Basisfall
+	if (b == 0):
+		return a
+	else:
+		return ggt(b, a % b)
+		
+Laufzeit:
+a = 1, weil wir die Menge nicht teilen
+b = 2, weil es immer um die 
+watershed = log2(1) = 0
+
+Aus einem Grund der mir nicht bekannt ist Fall 2 a0 = O(log n)
+
+3. GGT Mehrere Zahlen:
+Funktion:
+def ggt_multiple(numbers: array):
+	# Basisfall
+	if len(numbers) == 0:
+		return None
+	elif len(numbers) == 1:
+		return numbers[0]
+	else:
+		mid = len(numbers) // 2
+		links_ggt = ggt_multiple(numbers[:mid])
+		rechts_ggt = ggt_multiple(numbers[mid:])
+		
+		return ggt(links_ggt, rechts_ggt)
+		
+Laufzeit:
+a = 2, Menge wird in die Hälfte geteilt
+b = 2, 
+Watershed => log2(2) = 1
+Fall2: O(n^1 log^beta n) = O(n log n)
+
+4. Integration mit Trapezregel:
+Funktion:
+def trapez_integration(f, start, end, n):
+	# f: Zu integrierende Funktion
+	# start: Startpunkt Intervall
+	# end: Endpunkt Intervall
+	# n: Anzahl Teilintervalle
+	h = (end - start) / n
+	
+	integral_sum = 0.5 * (f(a) + f(b)
+	for i in range(1, n): <----- O(n)
+		x = a + i * h
+		integral_sum += f(x)
+		
+	integral = h * integral_sum
+	return integral
+
+Laufzeit:
+Kein Master Theorem aber da es eine for schleife von 1 bis n hat ist die Laufzeit = O(n)
+
+5. Introsort:
+Es ist eine Kombination aus Quicksort, Heapsort und Insertion Sort
+Funktionsweise:
+Introsort beginnt mit quicksort bis zu einer bestimmten rekursionstiefe. Dann wechselt es zu Heapsort um Quicksorts worst case O(n^2) zu vermeiden. Wenn die Anzahl an
+zu sortierenden Elementen zu klein ist, dann wird insertion sort verwendet.
+
+Als erstes wird partitioniert, daraus entstehen drei Fälle
+1. Wenn die Partitionsgröße so groß ist, dass man das Tiefenlimit erreichen könnte wird zu Heapsort gewechselt
+2. Wenn die Partitionsgröße zu klein ist wird insertion sort verwendet.
+3. Wenn die Partitionsgröße nicht zu groß und nicht zu klein wird quicksort verwendet
+
+Laufzeit:
+Im gegensatz zu Quicksort O(n log n)
+
+6. quicksort mit Zählen:
+Funktion:
+def quickSortAndCount(value: list):
+	counter = 0
+	if len(values) < 2:
+		return values, counter
+	
+	pivot = values[0]
+	right = []
+	left = []
+	for value in values[1:]:
+		if value > pivot:
+			right.append(value)
+		else:
+			counter += 1
+			left.append(value)
+	result1 = quickSortAndCount(left)
+	result2 = quickSortAndCount(right)
+	# Liste, Anzahl an Vertauschungen
+	return [result1[0] + [pivot] + result2[0], counter + result1[1] + result2[1]]
+	
+Laufzeit:
+a = 2
+b = 2
+Fall2: O(n log n)
+
+7. Merge Sort:
+Funktion
+def merge(left, right):
+	sortedValues = []
+	while len(left) and len(right):
+		if left[0] < right[0]:
+			sortedValues.append(left.pop(0))
+		else:
+			sortedValues.append(right.pop(0))
+	return sortedValues + left + right
+	
+def mergeSort(values):
+	if len(values) < 2:
+		return values
+	mid = int(len(values) / 2)
+	left = values[:mid]
+	right = values[mid:]
+	return merge(mergeSort(left), mergeSort(right))
+	
+Laufzeit:
+a = 2
+b = 2
+Fall2: O(n log n)
+
+8. Maximal zusammenhängende Teilfolge:
+Funktion
+def main(values, left, right)
+	if left == None:
+		left = 0
+	if right == None:
+		right = len(values)-1
+	if left >= right:
+		return values[left]
+	
+	mid = int((left+right)/2)
+	
+	sum = 0
+	leftMidMax = 0
+	for i in range(mid, left-1, -1):
+		sum += values[i]
+		leftMidMax = max(leftMidMax, sum)
+		
+	sum = 0
+	rightMidMax = 0
+	for in in range(mid+1, right+1):
+		sum += values[i]
+		rightMidMax = max(rightMidMax, sum)
+	
+	leftMax = main(values, left, mid)
+	rightMax = main(values, mid+1, right)
+	return max(leftMidMax+rightMidMax, leftMax, rightMax)
+	
+	
+Laufzeit:
+a = 2
+b = 2
+Fall2: O(n log n)
+
+9. Minimal zusammenhängende Teilfolge:
+Das selbe wie 8. nur dass hier jedes max() durch min() ersetzt werden muss
+
+Laufzeit ist auch die selbe O(n log n)
+
+10. Quicksort.
+
+Funktion:
+def quickSort(values):
+	if len(values) < 2:
+		return values
+	
+	pivot = values[0]
+	left = []
+	right = []
+	for value in values[1:]:
+		if values > pivot:
+			right.append(value)
+		else:
+			left.append(value)
+	return quickSort(left) + [pivot] + quickSort(right)
+
+Laufzeit:
+a = 2
+b = 2
+Fall2: O(n log n)
+
+11. Potenzieren:
+Funktion:
+def get_potenz(b, e):
+	if e == 0:
+		return 1
+	elif e == 2:
+		return get_potenz(b, int(e/2)) * get_potenz(b, int(e/2))
+	else:
+		return b * get_potenz(b, int(e/2)) * get_potenz(b, int(e/2))
+		
+Laufzeit:
+O(n) oder O(log n) ??????????????????????????????????????????????????????????
+
+12. Karatsuba: ????????????????????????????????????
+Funktion
+
+Laufzeit:
+a = 3
+b = 2
+f(n) = O(n) = 1
+da log2(3) > 1
+T(n) = O(n^log2(3))
+
+13. k-t größtes Element: ??????????????????????????????
+Funktion:
+
+def kthBiggestElement(arr, k):
+	if len(arr) == 0;
+		return None
+	if len(arr) == 1;
+		return arr[0]
+	
+	sorted_arr = sorted(arr)
+	return arr[len(arr) - k]
+	
+Laufzeit:
+Mit der Variante O(n log n), weil es zum sortieren O(n log n) braucht
+
+
+14. Median
+Funktion:
+def find_median(array):
+	if len(array) == 0:
+		return None
+	sorted_arr = sorted(array)
+	n = len(sorted_arr)
+	
+	if n % 2 == 0:
+		return (sorted_arr[n // 2 - 1] + sorted_arr[n // 2] / 2)
+	else:
+		return sorted_arr[n // 2]
+
+Laufzeit:
+
+O(n log n) da die Daten davor er sortiert werden müssen, der Schritt den Median aus der sortierten Liste zu bekommen ist O(1), fällt aber nicht ins gewicht
+
+15. Summe der Beträge:
+Funktion:
+def get_sum(values):
+	if len(values) == 0:
+		return None
+	elif len(values) == 1:
+		return abs(values[0])
+	else:
+		mid = len(values) // 2
+		left_sum = values[:mid]
+		right_sum = values[mid:]
+		return left_sum + right_sum
+		
+Laufzeit:
+a = 2
+b = 2
+Fall2: O(n log n)
+
+16. Summe der Einträge:
+Selbe wie 15 nur ohne abs()
+
+17. Max-Suche in unimodaler Liste
+Funktion:
+def maxUnimodalList(arr, start, end):
+	if len(arr) == 1:
+		return arr[0]
+	mid = (start + end) // 2
+	
+	if arr[mid] < arr[mid+1]:
+		return maxUnimodalList(arr, mid + 1, end)
+	else:
+		return maxUnimodalList(arr, start, mid)
+
+Laufzeit:
+Kein Master Theorem
+Aber sollte O(log n) sein, da es in jedem Schritt halbiert wird
+
+17. MinMax Suche:
+Funktion:
+def findMinMax(arr, start, end)
+	if len(arr) == 1:
+		return arr[0], arr[0]
+		
+	if len(arr) == 2:
+		if arr[start] > arr[end]:
+			return arr[end], arr[start]
+		else:
+			return arr[start], arr[end]
+			
+	mid = len(arr) // 2
+	
+	left_min, left_max = findMinMax(arr, start, mid)
+	right_min, right_max = findMinMax(arr, mid + 1, end)
+	
+	min_val = min(left_min, right_min)
+	max_val = max(left_max, right_max)
+	
+	return min_val, max_val
+	
+Laufzeit:
+a = 2
+b = 2
+Fall2: O(n log n) ?????
+
+

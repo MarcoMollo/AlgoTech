@@ -1,0 +1,242 @@
+DYNAMISCHES PROGRAMMIEREN ALGOS
+
+1. Catalan Zahlen
+Funktion:
+int catalan(int n) {
+	// Table to store results of subproblems
+	int catalan[] = new int[n + 2];
+	// Initialize first two values in table
+	catalan[0] = 1;
+	catalan[1] = 1;
+	// Fill entries in catalan[]
+	// using recursive formula
+	for (int i = 2; i <= n; i++) {
+		catalan[i] = 0;
+		for (int j = 0; j < i; j++) {
+			catalan[i] += catalan[j] * catalan[i - j - 1];
+		}
+	}
+ // Return last entry
+ return catalan[n];
+}
+Laufzeit:
+O(n)
+
+
+2. Binomialkoeffizienz
+Funktion:
+int binom(int n, int k){
+	bin[n][k]
+	for(int i = 0; i <= n; i++) <-------- O(n)
+		for(int j = 0; j <= min(i,k); j++) <-------- O(n)
+			if(j == 0 || j == i)
+				bin[i][o] = 1
+			else
+				bin[i][o] = bin[i-1][o-1] + bin[i][o-1]
+	return [n][k]
+}
+
+Laufzeit:
+O(n^2)
+
+3. 01-Rucksackproblem
+Funktion:
+	int P[n + 1, G + 1];
+	for (int x = 0; x <= G; x++) P[0, x] = 0; // Basisfall für i=0
+	for (int i = 0; i <= n; i++) P[i, 0] = 0; // Basisfall für x=0
+	// Rekursion für i,x>0
+	for (int i = 1; i <= n; i++) { <-------- O(n)
+		for (int x = 1; x <= G; x++) { <-------- O(G)
+			P[i, x] = P[i - 1, x];
+			if (x - gi >= 0) {
+				double t = wi + P[i - 1, x - gi];
+				P[i, x] = max(P[i, x], t);
+			}
+		}
+	}
+
+Laufzeit:
+O(n * G)
+
+4. Fibonacci
+Funktion:
+	int fib[N+1];
+	fib[0] = 0;
+	fib[1] = 1;
+	for (int n=2; n<=N; n++)
+		fib[n] = fib[n-1]+fib[n-2]
+
+Laufzeit:
+O(n)
+
+5. m-Bonacci
+Funktion:
+int mBon(N, M) {
+	int fib[N + 1];
+	fib[0] = 0;
+	fib[1] = 1;
+	for (int n = 2; n <= N; n++) <-------- O(n)
+		fib[n] = 0;
+		for (int m = max(n - M, 0); m <= n; m++) <-------- O(m)
+			fib[n] += fib[m]
+	return fib(N)
+}
+Laufzeit:
+O(n*m)
+
+6. Längste aufsteigende Teilfolge
+Funktion:
+	int distance = [N.length-1]
+	int predecessor = [N.length-1]
+ 
+	for(int i = 1, n < N; n++){ <-------- O(n)
+		distance[i] = 0
+	}
+	distance[0] = 1
+	for(int i = 1, n < N; i++){ <-------- O(n)
+		for(int j = 0, j < i; j++){ <-------- O(n)
+			if(N[i] > N[j] && distance[i] <= distance[j]){
+				distance[i] = distance[j] + 1
+				predecessor[i] = j
+			}
+		}
+	}
+Laufzeit:
+O(n^2)
+
+7. Alle kürzeste Wege
+Funktion:
+void allShortestPaths(DiGraph G, int D[][], Vertex P[][]) {
+	for (int i = 1; i <= n; i++) { // Initialisiere D und P <-------- O(n)
+		D[i][i] = 0;
+		for (int j = 1; j <= n; j++) { <-------- O(n) Zsm O(n^2)
+			if (i != j)
+				D[i][j] = c(vi, vj);
+			if (D[i][j] !=∞ )
+				P[i][j] = i;
+			else
+				P[i][j] = 0;
+		}
+	}
+	for (int k = 1; k <= n; k++) // Berechne Dk <-------- O(n)
+		for (int i = 1; i <= n; i++) <-------- O(n)
+			for (int j = 1; j <= n; j++) <-------- O(n) Zsm O(n^3)
+				if (D[i][j] > D[i][k] + D[k][j]) {
+					D[i][j] = D[i][k] + D[k][j];
+						P[i][j] = P[k][j];
+			}
+}
+
+Laufzeit:
+O(n^3). n = Anzahl an Knoten
+
+8. Kettenmultiplikation
+Funktion:
+	// Tabellen:
+	int M[n + 1][n + 1], OptKl[n + 1][n + 1];
+	// Basisfälle m = j - i = 0:
+	for (int i = 1; i <= n; i++) <-------- O(n)
+		M[i][i] = 0;
+	// Rekursion m = j – i > 0:
+	for (int m = 1; m < n; m++) { // Länge der Matrixkette <-------- O(n)
+		for (int i = 1; i <= n - m; i++) { // Position der ersten Kl. <-------- O(n)
+			int j = i + m; // Position der letzten Kl.
+			M[i][j] = ∞;
+			for (int k = i; k < j; k++) { // Position der mittleren Kl. <-------- O(n)
+				int W = M[i][k] + M[k + 1][j] + ri - 1∙rk∙rj;
+				if (W < M[i][j]) {
+					M[i][j] = W;
+					OptKl[i][j] = k;
+				}
+			}
+		}
+	}
+Laufzeit:
+O(n^3)
+Speicher:
+O(n^2) weil n x n matrizen
+
+9. Rod Cutting Problem
+Funktion:
+int dynCuttingRod(preise[], N) {
+	int Profit[N]; <------ Speicher O(n)
+	Profit[0] = 0;
+	//durchlaufe alle möglichen größen des Stabes
+	for (i = 1 to N) { <-------- O(n)
+	//initialisiere den max Profit mit -unendlich
+		q = -infinity
+		for (j = 0 to i){ <-------- O(n)
+			// Erhöhe q wenn bessere Profit Konstellation gefunden wurde
+			q = max(q, preise[j] + Profit[j - i])
+		}
+		// Speichere den max errechneten Profit für den Index i im profitArray
+		Profit[i] = q
+	}
+ return Profit[n]
+}
+Laufzeit:
+O(n^2)
+Speicher:
+O(n)
+
+10.  Zahlendreieck:
+Funktion:
+int[][] zahlenDreieck(a[][]){
+	n = a.length + 1
+	s[n][n]
+	p[n][n]
+ 
+	for(int i = 1; i < n; j++) <-------- O(n)
+		s[0][i] = 0;
+		s[i][0] = 0;
+	for(int i = 1; i < n; j++) <-------- O(n)
+		for(int j = 1; j < i; j++) <-------- O(n)
+			value = a[i-1][j-1]
+			if(s[i-1][j] > s[i-1][j-1]){
+				s[i][j] = s[i-1][j] + value;
+				p[i][j] = 1
+			}else{
+				s[i][j] = s[i-1][j-1] + value;
+				p[i][j] = 0
+			}
+		}
+	}
+	int max = 0;
+	for (int j=0; j<n; j++) <-------- O(n)
+		if (s[n-1][j] >= s[n-1][max]) max=j;
+
+		// verfolge den größten Pfad zurück über das maximum und das vorgänger array
+}
+Laufzeit:
+O(n^2)
+
+11. Editierabstand:
+Funktion:
+def edit_distance(str1, str2):
+    m = len(str1)
+    n = len(str2)
+
+    # Initialisierung der Matrix
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    # Initialisierung der ersten Zeile und Spalte der Matrix
+    for i in range(m + 1):
+        dp[i][0] = i
+    for j in range(n + 1):
+        dp[0][j] = j
+
+    # Berechnung der Editierabstande
+    for i in range(1, m + 1):  <-------- O(m)
+        for j in range(1, n + 1): <-------- O(n)
+            if str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = 1 + min(dp[i - 1][j],        # Löschen
+                                   dp[i][j - 1],        # Einfügen
+                                   dp[i - 1][j - 1])    # Ersetzen
+
+    # Der Wert in der unteren rechten Ecke der Matrix ist der Editierabstand
+    return dp[m][n]
+	
+Laufzeit:
+O(n*m)

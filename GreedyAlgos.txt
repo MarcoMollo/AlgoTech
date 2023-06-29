@@ -1,0 +1,170 @@
+GREEDY ALGOS VON DER LISTE
+1. A* Algorithmus:
+
+Laufzeit:
+n = Anzahl Knoten
+b = Maximum der Tiefensuche 
+O(n^b)
+
+2. Clustering
+Funktion:
+def clustering_with_mst(G, k):
+    mst = minimal_spanning_tree(G) <-------- O(E log E)
+    edges = sorted(mst.edges(data=True), key=lambda x: x[2]['weight'], reverse=True) <-------- O(E log E)
+    clusters = {i: [i] for i in G.nodes()} <----------- O(V)
+    while len(clusters) > k:
+        u, v, w = edges.pop()
+        if u in clusters and v in clusters and clusters[u] != clusters[v]:
+            new_cluster = clusters[u] + clusters[v]
+            for node in new_cluster: <-------------- O(E)
+                clusters[node] = new_cluster
+            del clusters[u]
+            del clusters[v]
+    return list(clusters.values())
+
+Laufzeit:
+O(E log E + V + E)
+3. Dijkstra
+Funktion:
+def shortestPath(G: DistanzGraph, s: Vertex, d: list, p: VertexList, start):
+	for (jeden Knoten v):
+		d[v] = inf
+		p[v] = undef
+	distance[start] = 0
+	Set<Vertex> K 
+	K.insert(start)
+	while !K.empty():
+		Lösche Knoten v aus K mit minimalem d[v] <--------- Greedyschritt
+		for (jeden Nachbarn w von v):
+			if (d[w] == inf):
+				K.insert(w)
+			if (d[v] + change(v,w) < d[w]):
+				d[w] = d[v] + change(v, w)
+				p[w] = v
+
+Laufzeit
+E = Anzahl an Kanten
+V = Anzahl an Knoten
+Initialisierung braucht O(|V|) da alle Knoten besucht werden
+Insert braucht O(log|V|)
+Jede Kante wird einmal betrachtet O(|E| * log|V|)
+Greedyschritt in O(log|V|)
+=> O((|E| + |V|) * log|V|)
+
+4. Flüsse in Netzwerken
+Funktion:
+for each edge (u,v) in E
+    do f[u, v] <- 0
+    do f[v, u] <- 0
+while es gibt einen Weg p von s nach t im Restgraphen
+    do c_f(p) <- min {c_f(u, v): (u, v) ist auf p}
+        for jede Kante (u, v) in p
+            do f[u, v] <- f[u, v] + c_f(p)
+                f[v, u] <- - f[v, u]
+
+Laufzeit:
+Hängt davon ab wie die zunehmenden Wege gefunden werden
+Wenn man diese mit der Breitensuche sucht, dann ist es O(|V| * |E|^2)
+
+5. Huffman Coding
+Siehe VL
+
+6. Job Scheduling
+Funktion:
+def jobScheduling(jobs):
+	sorted_jobs = sorted(jobs) <------- O(n log n)
+	
+	last_end_time = 0  <------------- O(1)
+	selected_jobs = [] <------------- O(1)
+	
+	for job in sorted_jobs: <---------- O(n)
+		start_time, endtime = job <------------- O(1)
+		if start_time >= last_end_time: <------------- O(1)
+			selected_jobs.append(job) <------------- O(1)
+			last_end_time = end_time <------------- O(1)
+			
+	return selected_jobs
+
+Laufzeit:
+O(n log n) weil alle Prozesse erst einmal sortiert werden müssen
+
+7. Kartenfärbung
+Funktion:
+def greedy_coloring(graph):
+    color = {}  <------------- O(1)
+    for node in graph: <---------- O(n)
+        used_colors = set(color.get(neighbour) for neighbour in graph[node] if neighbour in color) <---------- O(n)
+        color[node] = min(set(range(1, len(graph) + 1)) - used_colors) <------------- O(1)
+    return color 
+
+Laufzeit:
+Doppelte for schleife mit jeweiliger Laufzeit von O(n)
+=> O(n^2)
+
+9. Min-Cut(Max-Flow)
+Funktion:
+G=(V,E) ein endlicher gerichteter Graph mit einer Quelle s, einer Senke t und jede Kante habe eine nichtnegative Kapazität.
+findeKantenEinesMinCut(G)
+	G_f <- Residualnetzwerk(G)
+	S <- Leere Menge
+	T <- Leere Menge
+	Für jeden Knoten v in V
+		Wenn Pfad(s,v) in G_f existiert
+		dann S <- S Vereinigungsmenge {v}
+		ansonsten T <- T Vereinigungsmenge {v}
+	C <- Leere Menge
+	Für jede Kante e in E|
+		Wenn startKnoten(e) in S und endKnoten(e) in T liegt
+		dann C <- C Vereinigungsmenge {e}
+	C ist jetzt die Menge der Kanten für einen minimalen Schnitt
+	
+Laufzeit: 
+O(|V| + |E|) weil durch alle Knoten und Kanten gelaufen wird
+
+10. 0-1-Rucksackproblem
+Annahme: Beide Arrays sind sortiert
+Funktion:
+def 01Knapsack(values: list, weights: list, capacity: int) -> int:
+    max_value = 0
+    for i in range(len(values)):
+        if capacity - weights[i] < 0:
+            break
+        capacity -= weights[i]
+        max_value += values[i]
+    return max_value
+	
+Laufzeit:
+O(n) da man einmal durch das array läuft
+
+11. Wechselgeld
+Funktion:
+def coinChange(amount: int, coins: list) -> int:
+    result = []
+    while amount > 0:
+        for coin in coins:
+            if amount >= coin:  # Greedy Choice
+                amount -= coin
+                result.append(coin)
+                break
+    return result
+	
+Laufzeit:
+O(n)
+
+12. Fraktionale Rucksackproblem
+Annahme: Beide Arrays sind sortiert
+Funktion:
+def main(values: list, weights: list, capacity: int) -> int:
+    max_value = 0
+    for i in range(len(values)):
+        if capacity == 0:
+            break
+        wc_ratio = 1
+        if weights[i] > capacity:
+            wc_ratio = capacity/weights[i]
+        capacity -= wc_ratio*weights[i]
+        max_value += wc_ratio*values[i]
+    return max_value
+
+Laufzeit:
+O(n) da man einmal durch das array läuft

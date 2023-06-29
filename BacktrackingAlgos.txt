@@ -1,0 +1,162 @@
+BACKTRACKING ALGOS
+
+1. Partitionierung einer Natürlichen Zahl:
+Funktionen:
+
+bool isCandidate(int s, int n) {
+	return s<=n;
+}
+bool isSuccessor(int x, int n) {
+	reutn x<n;
+}
+
+void partition(int n){
+	int k, no;
+	int x[500], s[500]
+	bool isSucc;
+	
+	k = 1;
+	no = 0;
+	x[k] = 0;
+	s[0] = 0;
+	while (k>0) {
+		do {
+			isSucc = isSuccessor(x[k], n);
+			if (isSucc){
+				x[k]++;
+				s[k] = s[k-1]+x[k]
+			}
+		} while ( isSucc && !isCandidate(s[k], n)) {
+			if (isSucc) {
+				if (s[k] == n) {
+					writeSolution(x, k);
+					no++;
+				} else {
+					k++;
+					x[k] = x[k-1]-1;
+				}
+			} else {
+				k--;
+			}
+		}
+		cout << "Anzahl der Loesungen: " << no << endl;
+	}
+Laufzeit:
+O(n!)
+
+2. Aufsteigende Türme auf den ersten m Reihen (WAS DAS, STAND NIRGENDSWO WAS DAS IST, NICHTMAL BING`S GPT WUSSTE DAS)
+
+
+3. Binpacking
+
+
+5. Springerproblem
+Naiver Ansatz: BruteForce 
+Funktion solveKnightTour(board, row, col, move_count):
+    // Überprüfen, ob das Spielbrett vollständig ist (alle Felder besucht wurden)
+    if move_count == Anzahl der Felder auf dem Spielbrett:
+        return True
+    
+    // Prüfen, ob die aktuelle Position innerhalb der Grenzen des Spielbretts liegt
+    if row < 0 oder row >= Anzahl der Zeilen des Spielbretts oder col < 0 oder col >= Anzahl der Spalten des Spielbretts oder board[row][col] != -1:
+        return False
+    
+    // Setze den aktuellen Zug auf das aktuelle Feld
+    board[row][col] = move_count
+    
+    // Überprüfe alle möglichen Schritte des Springers
+    for each possible_move in mögliche Springerzüge:
+        next_row = row + possible_move.delta_row
+        next_col = col + possible_move.delta_col
+        
+        // Versuche, den nächsten Zug rekursiv zu machen
+        if solveKnightTour(board, next_row, next_col, move_count + 1):
+            return True
+    
+    // Falls keine Lösung gefunden wurde, setze das Feld zurück und kehre zurück
+    board[row][col] = -1
+    return False
+
+einfach alle Möglichkeiten durchgehen die es gibt
+
+Laufzeit:
+O(8^n) da der Springer 8 Möglichkeiten hat zu springen. N ist die Anzahl der Felder auf dem Schachbrett
+
+6. Subset Sum
+Funktion:
+boolean subsetSum(array, index, value, summe){
+	if(value + array[index] == summe){
+		print(array[index])
+		return true
+	}
+ 
+	for(i = index to array.length -1){
+		if(value + array[index] <= summe){
+			if(subsetSum(array, i, value + array[index], summe)){
+				print(array[index])
+				return true
+			}
+		}
+	}
+ 
+	return false;
+}
+
+Laufzeit:
+O(2^n), da es N mal aufgerufen wird, aber wegen den Rekursiven aufrufen exponentiell steigen kann
+
+7. Testmusterkompatkierung
+Funktion:
+def generateTestPatterns(circuit, max_patterns, current_patterns, test_patterns):
+    if len(test_patterns) >= max_patterns:
+        return True
+    
+    for pattern in generateAllPossiblePatterns(circuit):
+        if isValidPattern(pattern, test_patterns):
+            test_patterns.append(pattern)
+            if generateTestPatterns(circuit, max_patterns, current_patterns + 1, test_patterns):
+                return True
+            test_patterns.pop()
+    
+    return False
+
+Laufzeit:
+O(f(n) * g(k) * T(n, max_patterns))
+f(n) = generateAllPossiblePatterns
+g(k) = isValidPattern
+T(n, max_patterns) = Anzahl rekursiven Aufrufe der Funktion generateTestPatterns
+
+8. Türme auf den ersten m Reihen  (WAS DAS, STAND NIRGENDSWO WAS DAS IST, NICHTMAL BING`S GPT WUSSTE DAS)
+
+
+9. Türmeproblem
+Versteh ich nicht, man muss sie doch einfach nur auf der diag anordnen
+
+10. Turnpike reconstruction ?
+
+
+11. Färbung von Graphen
+Funktion:
+bool färbung(Graph G, int c, int i) // G=(V,E)
+{ // Vergibt Farbe für Knoten i, wenn 1..i-1 gefärbt sind.
+	int f = 0;
+	bool result;
+	do {
+		f++;
+		result = false;
+		if (Farbe f ist möglich für Knoten i) {
+			farbe[i] = f;
+			if (i < n) {
+				result = färbung(G, c, i + 1); // Färben des Sub-Trees
+				if (!result)
+					farbe[i] = 0; // Backtracking
+			} else
+				result = true; // Gültige Färbung…
+			} // …gefunden
+		}
+	} while (!result && f != c);
+ return result;
+}
+
+Laufzeit:
+O(n^n)
