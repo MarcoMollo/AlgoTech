@@ -158,7 +158,7 @@ Annahme: arr besteht aus Items die als Tupel aufgebaut sind (profit, weight)
 Funktion:
 def fractionalKnapsack(W, arr):
 	# Sorting Item on basis of ratio
-    arr.sort(key=lambda x: (x.profit/x.weight), reverse=True)   
+    arr.sort(key=lambda x: (x.profit/x.weight), reverse=True)  <----- Greedyschritt
  
     # Result(value in Knapsack)
     finalvalue = 0.0
