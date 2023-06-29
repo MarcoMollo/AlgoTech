@@ -314,4 +314,29 @@ a = 2
 b = 2
 Fall2: O(n log n) ?????
 
+18. Fast Fourier Transform
+Funktion:
+def FFT(f):
+	n = len(f)
+	if n == 1:
+		return [f[0]]
+	F = n * [0]
+	f_even = f[0::2]
+	f_odd = f[1::2]
+	F_even = FFT(f_even)
+	F_odd = FFT(f_odd)
+	n2 = n // 2
+	for i in range(n2):
+		twiddle = exp(-2*pi*j*i/n)
+		oddTerm = F_odd[i] * twiddle
+		F[i] = F_even[i] + oddTerm
+		F[i+n2] = F_even[i] - oddTerm
+	return F
+Laufzeit:
+a = 2
+b = 2
+Fall 2 da f(n) = O(n)
+=> O(n log n)
+
+
 
