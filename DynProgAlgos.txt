@@ -20,7 +20,7 @@ int catalan(int n) {
  return catalan[n];
 }
 Laufzeit:
-O(n)
+O(n^2)
 
 
 2. Binomialkoeffizienz
