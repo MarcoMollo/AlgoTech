@@ -266,6 +266,8 @@ def get_sum(values):
 Laufzeit:
 a = 2
 b = 2
+watershed = 1
+f(n) = O(n)
 Fall2: O(n log n)
 
 16. Summe der Einträge:
@@ -284,7 +286,12 @@ def maxUnimodalList(arr, start, end):
 		return maxUnimodalList(arr, start, mid)
 
 Laufzeit:
-Kein Master Theorem
+a = 1
+b = 2
+watershed = 0
+f(n) = O(1)
+=> O(n^watershed log n)
+=> O(1 * log n) => O(log n)
 Aber sollte O(log n) sein, da es in jedem Schritt halbiert wird
 
 17. MinMax Suche:
