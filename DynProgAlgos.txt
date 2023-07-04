@@ -30,9 +30,9 @@ int binom(int n, int k){
 	for(int i = 0; i <= n; i++) <-------- O(n)
 		for(int j = 0; j <= min(i,k); j++) <-------- O(n)
 			if(j == 0 || j == i)
-				bin[i][o] = 1
+				bin[i][j] = 1
 			else
-				bin[i][o] = bin[i-1][o-1] + bin[i][o-1]
+				bin[i][j] = bin[i-1][j-1] + bin[i][j-1]
 	return [n][k]
 }
 

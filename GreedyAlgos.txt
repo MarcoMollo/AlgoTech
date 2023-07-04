@@ -181,6 +181,15 @@ def fractionalKnapsack(W, arr):
     # Returning final value
     return finalvalue
 
+if __name__ == "__main__":
+	W = 50
+	arr = [Item(60, 10), Item(100, 20), Item(120, 30)]
+	
+	max_value = fractionalKnapsack(W, arr)
+	print(max_value)
+	
+Output: 240 Weil 60 + 100 + 80
+
 Laufzeit:
 O(n log n)
 

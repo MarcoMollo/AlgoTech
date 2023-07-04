@@ -25,8 +25,8 @@ Laufzeit:
 a = 1, weil wir die Menge nicht teilen
 b = 2, weil es immer um die 
 watershed = log2(1) = 0
-
-Aus einem Grund der mir nicht bekannt ist Fall 2 a0 = O(log n)
+f(n) = O(1) deswegen O(log n)
+Fall 2 = O(log n)
 
 3. GGT Mehrere Zahlen:
 Funktion:
@@ -47,7 +47,10 @@ Laufzeit:
 a = 2, Menge wird in die Hälfte geteilt
 b = 2, 
 Watershed => log2(2) = 1
-Fall2: O(n^1 log^beta n) = O(n log n)
+f(n) = O(n)
+O(n) = O(n^1-eps) für eps > 0 gibts net deswegen Fall2
+
+Fall2: O(n^1 log n) = O(n log n)
 
 4. Integration mit Trapezregel:
 Funktion:
@@ -205,7 +208,7 @@ def get_potenz(b, e):
 		return b * get_potenz(b, int(e/2)) * get_potenz(b, int(e/2))
 		
 Laufzeit:
-O(n) oder O(log n) ??????????????????????????????????????????????????????????
+O(n)
 
 12. Karatsuba: ????????????????????????????????????
 Funktion
@@ -217,7 +220,7 @@ f(n) = O(n) = 1
 da log2(3) > 1
 T(n) = O(n^log2(3))
 
-13. k-t größtes Element: ??????????????????????????????
+13. k-t größtes Element:
 Funktion:
 
 def kthBiggestElement(arr, k):
@@ -259,8 +262,12 @@ def get_sum(values):
 		return abs(values[0])
 	else:
 		mid = len(values) // 2
-		left_sum = values[:mid]
-		right_sum = values[mid:]
+		left_half = values[:mid]
+		right_half = values[mid:]
+		
+		left_sum = get_sum(left_half)
+		right_sum = get_sum(right_half)
+		
 		return left_sum + right_sum
 		
 Laufzeit:
@@ -319,7 +326,8 @@ def findMinMax(arr, start, end)
 Laufzeit:
 a = 2
 b = 2
-Fall2: O(n log n) ?????
+f(n) = O(n)
+Fall2: O(n log n)
 
 18. Fast Fourier Transform
 Funktion:
@@ -344,6 +352,7 @@ a = 2
 b = 2
 Fall 2 da f(n) = O(n)
 => O(n log n)
+
 
 
 

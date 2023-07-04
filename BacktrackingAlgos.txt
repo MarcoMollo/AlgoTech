@@ -159,4 +159,6 @@ bool färbung(Graph G, int c, int i) // G=(V,E)
 }
 
 Laufzeit:
-O(n^n)
+c = Anzahl Farben
+n = Anzahl Knoten
+O(c^n)
